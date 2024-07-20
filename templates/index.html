@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <style>
+        .product-item {
+            display: inline-block;
+            width: 200px; /* Фиксированная ширина ячейки */
+            margin: 10px;
+            text-align: center;
+        }
+        .product-item img {
+            width: 100%; /* Изображение будет занимать всю ширину ячейки */
+            height: 200px; /* Фиксированная высота изображения */
+            object-fit: cover; /* Масштабирует изображение, сохраняя пропорции */
+        }
+        .product-item h3 {
+            margin: 10px 0;
+            font-size: 16px; /* Фиксированный размер шрифта */
+            height: 40px; /* Фиксированная высота для текста */
+            overflow: hidden; /* Скрывает текст, если он не помещается */
+        }
+        .product-item button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .product-item button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">Главная страница</a>
+            <input id="search-input" type="text" placeholder="Поиск продукта" oninput="searchProduct()">
+            <button type="button" onclick="performSearch()">Поиск</button>
+        </nav>
+    </header>
+    <main id="main-content">
+        <section class="product-list">
+            {% for product in products %}
+            <div class="product-item">
+                <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <button onclick="window.location.href='/product_details?product_name={{ product.name }}'">Найти дешевле</button>
+            </div>
+            {% endfor %}
+            <!-- Новые элементы из второго файла -->
+            <div id="results"></div>
+            <!-- Конец новых элементов -->
+        </section>
+    </main>
+    <script>
+        function searchProduct() {
+            const query = document.getElementById('search-input').value;
+            fetch('/search_suggestions?q=' + query)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestions = document.getElementById('suggestions');
+                    suggestions.innerHTML = '';
+                    data.forEach(item => {
+                        const div = document.createElement('div');
+                        div.textContent = item.name;
+                        div.onclick = function() {
+                            window.location.href = '/search_results?q=' + item.name;
+                        };
+                        suggestions.appendChild(div);
+                    });
+                });
+        }
+
+        function findCheaper(productName) {
+        console.log("Searching for cheaper options for product: " + productName);
+        $.ajax({
+            url: '/get_pharmacies',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ product_name: productName }),
+            success: function(response) {
+                console.log("Received response: ", response);
+                $('#results').empty();
+                response.forEach(function(item) {
+                    $('#results').append(`
+                        <div>
+                            <h3>${item.product_name}</h3>
+                            <p>Pharmacy: ${item.pharmacy_name}</p>
+                            <p>Price: ${item.price}</p>
+                            <a href="${item.result_url}" target="_blank">Go to Pharmacy</a>
+                        </div>
+                    `);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Error: ", xhr.responseJSON);
+                alert('Error: ' + xhr.responseJSON.error);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        // Ваш существующий код jQuery
+    });
+        function performSearch() {
+            const query = document.getElementById('search-input').value;
+            window.location.href = '/search_results?q=' + query;
+        }
+
+        function searchProductByName(productName) {
+            window.location.href = '/search_results?q=' + encodeURIComponent(productName);
+        }
+
+        $(document).ready(function() {
+            $('#searchButton').click(function() {
+                var productName = $('#productName').val();
+                console.log("Sending request for product: " + productName);  // Логирование
+                $.ajax({
+                    url: '/search',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ product_name: productName }),
+                    success: function(response) {
+                        console.log("Received response: ", response);  // Логирование
+                        $('#results').empty();
+                        response.forEach(function(item) {
+                            $('#results').append(`
+                                <div>
+                                    <h3>${item.product_name}</h3>
+                                    <img src="${item.image_url}" alt="${item.product_name}" width="100">
+                                    <p>Pharmacy: ${item.pharmacy_name}</p>
+                                    <p>Price: ${item.price}</p>
+                                    <a href="${item.result_url}" target="_blank">Go to Pharmacy</a>
+                                </div>
+                            `);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error: ", xhr.responseJSON);  // Логирование
+                        alert('Error: ' + xhr.responseJSON.error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

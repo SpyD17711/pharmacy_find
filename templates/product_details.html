@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали продукта</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">Главная страница</a>
+            <input id="search-input" type="text" placeholder="Поиск продукта" oninput="searchProduct()">
+            <button type="button" onclick="performSearch()">Поиск</button>
+        </nav>
+    </header>
+    <main>
+        <div class="product-details">
+            <div class="product-image">
+                <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                <h2>{{ product.name }}</h2>
+            </div>
+            <div class="pharmacies-list">
+                {% for pharmacy in pharmacies %}
+                <div class="pharmacy-item" data-price="{{ pharmacy.price }}">
+                    <p>Аптека: {{ pharmacy.pharmacy_name }}</p>
+                    <p class="price">Цена: {{ pharmacy.price }} р</p>
+                    <a href="{{ pharmacy.result_url }}" target="_blank">Перейти</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+    <script>
+        // Add this code to highlight the cheapest pharmacy
+        document.addEventListener('DOMContentLoaded', function () {
+            const pharmacyItems = document.querySelectorAll('.pharmacy-item');
+            let lowestPrice = Infinity;
+            let cheapestPharmacy = null;
+
+            pharmacyItems.forEach(item => {
+                const price = parseFloat(item.dataset.price);
+                if (price < lowestPrice) {
+                    lowestPrice = price;
+                    cheapestPharmacy = item;
+                }
+            });
+
+            if (cheapestPharmacy) {
+                cheapestPharmacy.classList.add('cheapest');
+            }
+        });
+    </script>
+</body>
+</html>

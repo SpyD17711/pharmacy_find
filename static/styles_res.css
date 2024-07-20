@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav a {
+    text-decoration: none;
+    color: #000;
+    margin-right: 20px;
+}
+
+nav input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px;
+}
+
+nav button {
+    padding: 5px 10px;
+}
+.product-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.product-image {
+    flex: 0 0 200px; /* Фиксированная ширина картинки в пикселях */
+    max-width: 200px; /* Максимальная ширина картинки в пикселях */
+    margin-right: 20px; /* Отступ между картинкой и списком аптек */
+}
+
+.product-image img {
+    width: 100%; /* Ширина картинки равна ширине контейнера */
+    height: auto; /* Высота картинки изменяется пропорционально */
+}
+
+.product-name {
+    margin-top: 10px; /* Добавляем отступ сверху для заголовка товара */
+}
+
+.pharmacies-list {
+    flex: 1; /* Растягивается, чтобы занять оставшееся пространство */
+}
+
+.pharmacy-item {
+    margin-bottom: 10px; /* Отступ под каждым элементом списка аптек */
+}
+

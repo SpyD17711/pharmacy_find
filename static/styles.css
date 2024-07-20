@@ -1,0 +1,159 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Soft background color */
+}
+
+header {
+    background-color: #fff;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px; /* Add padding to the nav */
+}
+
+nav a {
+    text-decoration: none;
+    color: #000;
+    margin-right: 20px;
+    font-weight: bold; /* Make the link bolder */
+}
+
+nav input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #ccc; /* Add a border to the input */
+    border-radius: 4px; /* Round the corners */
+}
+
+nav button {
+    padding: 5px 10px;
+    background-color: #007bff; /* Blue background for button */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px; /* Round the corners */
+}
+
+nav button:hover {
+    background-color: #0069d9; /* Slightly darker blue on hover */
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to multiple rows */
+    justify-content: center; /* Center items horizontally */
+    padding: 20px;
+}
+
+.product-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+    padding: 20px; /* Add padding to the product-details container */
+    background-color: #fff; /* White background for the container */
+    border-radius: 8px; /* Round the corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.product-image {
+    flex: 0 0 250px; /* Increased width for the image */
+    max-width: 250px;
+    margin-right: 20px;
+    text-align: center; /* Center the image */
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Round the corners of the image */
+}
+
+.product-image h2 {
+    margin-top: 10px;
+    font-size: 1.5em; /* Larger font size for the product name */
+    font-weight: bold;
+    color: #333;
+}
+
+.pharmacies-list {
+    flex: 1;
+}
+
+.pharmacy-item {
+    margin-bottom: 10px;
+    padding: 10px; /* Add padding to the pharmacy item */
+    background-color: #fff; /* White background for each pharmacy item */
+    border-radius: 8px; /* Round the corners of the pharmacy item */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for pharmacy items */
+}
+
+.pharmacy-item p {
+    margin: 5px 0;
+}
+
+.pharmacy-item .price {
+    font-weight: bold; /* Bold price */
+}
+
+.pharmacy-item a {
+    text-decoration: none;
+    color: #007bff; /* Blue color for the link */
+    font-weight: bold;
+}
+
+.pharmacy-item a:hover {
+    text-decoration: underline;
+}
+
+.cheapest {
+    background-color: #e0f2e0; /* Soft green background for cheapest pharmacy */
+}
+
+
+.product-item {
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-item h3 {
+    margin: 10px 0;
+    font-size: 16px;
+    height: 40px;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+.product-item button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.product-item button:hover {
+    background-color: #45a049;
+}
